@@ -1,0 +1,13 @@
+{
+    "name": "ThermalPrinter",
+    "alias": "thermalprinter",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ThermalPrinter\\Providers\\ThermalPrinterServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

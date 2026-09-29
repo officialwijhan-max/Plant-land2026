@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'Agency' => 'Agency',
+    'Strategic Partner' => 'Strategic Partner',
+    'strategicPartner' => 'Strategic Partner',
+    'Bench' => 'Bench',
+    'Create Extra User' => 'Create Extra User',
+    'Kiosk' => 'Kiosk',
+    'Strategic Partners' => 'Strategic Partners',
+    'Benches' => 'Benches',
+    'Kiosks' => 'Kiosks',
+    'New Agency' => 'New Agency',
+    'New Strategic Partner' => 'New Strategic Partner',
+    'New Bench' => 'New Bench',
+    'New Kiosk' => 'New Kiosk',
+    'Agencies' => 'Agencies',
+    'Commissioner Sales' => 'Commissioner Sales',
+    'Commissioner Sale' => 'Commissioner Sale',
+    'Commissioner' => 'Commissioner',
+    'Affiliate Sales' => 'Affiliate Sales',
+    'Affiliate Sale' => 'Affiliate Sale',
+    'Affiliate' => 'Affiliate',
+    'Agency Name' => 'Agency Name',
+];

@@ -1,0 +1,21 @@
+{
+    "ExtraUser": {
+        "item_id" : "377010101",
+        "migration": [
+            "2021_08_10_161952_add_intro_prefix_for_extra_users.php",
+            "2021_08_10_190359_add_extrauser_permission_to_permissions_table.php"
+        ],
+        "names": [
+
+        ],
+        "versions": [
+            "1.0.0"
+        ],
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "notes": [
+            "This is Extra user module for Infix Biz. Thanks for using."
+        ]
+    }
+}

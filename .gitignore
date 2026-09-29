@@ -1,0 +1,58 @@
+/node_modules
+/public/hot
+/public/storage
+
+# Runtime uploads (staff photos, imported files, custom logos, etc.) are
+# user/deployment data, not source — keep the folder, ignore its contents.
+# Exception: logo.png/favicon.png are the default branding assets that
+# general_settings' seeded row (sql.sql) points to out of the box — without
+# them the admin header hard-crashes on a fresh install (file_get_contents
+# on a file that was never there). Replace them with your own anytime.
+/public/uploads/*
+!/public/uploads/.gitkeep
+!/public/uploads/settings/
+/public/uploads/settings/*
+!/public/uploads/settings/logo.png
+!/public/uploads/settings/favicon.png
+
+/storage/*.key
+
+# mPDF's writable font cache — it regenerates these itself on first use of
+# any font, so they don't belong in source control (and were embedding
+# uploaded-font filenames, i.e. runtime data, not app code).
+/storage/fonts/*
+!/storage/fonts/.gitkeep
+/vendor
+.env
+.env.*
+!.env.example
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.phpintel
+/temp-update
+*.tmp
+*.bak
+*.bak_*
+.DS_Store
+Thumbs.db
+
+# Loose scratch/export files that have shown up in the project root before
+# (invoices, CSV exports, IIS/update-package leftovers) — not part of the app.
+/*.pdf
+/*.csv
+/config.json
+/update.html*
+/web.config
+/test_docroot.txt
+
+# Local/runtime sensitive files
+/public/.access_code
+/public/.access_log
+/public/.account_email
+/public/database-backup/
+/public/export_csv/
+/public/test_docroot.txt

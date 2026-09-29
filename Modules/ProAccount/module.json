@@ -1,0 +1,13 @@
+{
+    "name": "ProAccount",
+    "alias": "proaccount",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ProAccount\\Providers\\ProAccountServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

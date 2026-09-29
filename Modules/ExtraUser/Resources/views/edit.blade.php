@@ -1,0 +1,267 @@
+@extends('backEnd.master')
+@section('mainContent')
+    @if(session()->has('message-success'))
+        <div class="alert alert-success mb-25" role="alert">
+            {{ session()->get('message-success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @elseif(session()->has('message-danger'))
+        <div class="alert alert-danger">
+            {{ session()->get('message-danger') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    <div id="add_product">
+        <section class="admin-visitor-area up_st_admin_visitor">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="box_header">
+                            <div class="main-title d-flex">
+                                <h3 class="mb-0 mr-30">{{__('contact.Edit Contact')}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="white_box_50px box_shadow_white">
+                            <!-- Prefix -->
+                            <form action="{{route("extrauser.update",$contact->id)}}" method="POST"
+                                  enctype="multipart/form-data" id="content_form">
+                                @csrf
+                                @method("PUT")
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Contact Type')}}</label>
+                                            <select class="primary_select mb-15 contact_type" name="contact_type">
+                                                <option
+                                                    {{ $contact->contact_type == 'Agency' ? 'selected' : '' }} value="Agency">{{__('extrauser::extrauser.Agency')}}</option>
+                                                <option
+                                                    {{ $contact->contact_type == 'strategicPartner' ? 'selected' : '' }} value="strategicPartner">{{__('extrauser::extrauser.Strategic Partner')}}</option>
+                                                <option
+                                                    {{ $contact->contact_type == 'Bench' ? 'selected' : '' }} value="Benches">{{__('extrauser::extrauser.Bench')}}</option>
+                                                <option
+                                                    {{ $contact->contact_type == 'Kiosk' ? 'selected' : '' }} value="Kiosks">{{__('extrauser::extrauser.Kiosk')}}</option>
+                                            </select>
+                                            <span class="text-danger">{{$errors->first('contact_type')}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for=""> {{__('contact.Name')}} </label>
+                                            <input class="primary_input_field" name="name"
+                                                   placeholder="Name" type="text"
+                                                   value="{{$contact->name}}" required>
+                                            <span class="text-danger">{{$errors->first('name')}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Profile Picture')}} </label>
+                                            <div class="primary_file_uploader">
+                                                <input class="primary-input" type="text" id="placeholderFileOneName"
+                                                       placeholder="{{ __('common.Browse file') }}" readonly="">
+                                                <button class="" type="button">
+                                                    <label class="primary-btn small fix-gr-bg"
+                                                           for="document_file_1">{{__("common.Browse")}} </label>
+                                                    <input type="file" class="d-none" name="file" id="document_file_1">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Business Name')}}</label>
+                                            <input type="text" name="business_name" class="primary_input_field"
+                                                   value="{{$contact->business_name}}">
+                                            <span class="text-danger">{{$errors->first('business_name')}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Tax Number')}}</label>
+                                            <input type="text" name="tax_number" class="primary_input_field"
+                                                   value="{{$contact->tax_number}}">
+                                            <span class="text-danger">{{$errors->first('tax_number')}}</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Opening Balance')}}</label>
+                                            <input type="text" name="opening_balance" class="primary_input_field"
+                                                   value="{{$contact->opening_balance}}" readonly>
+                                            <span class="text-danger">{{$errors->first('opening_balance')}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label" for="">{{__('contact.Pay Term')}}</label>
+                                            <input type="text" name="pay_term" class="primary_input_field"
+                                                   value="{{$contact->pay_term}}">
+                                            <span class="text-danger">{{$errors->first('pay_term')}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Pay Term Condition')}}</label>
+                                            <select class="primary_select mb-15" id="sub_category_list"
+                                                    name="pay_term_condition">
+                                                <option @if($contact->pay_term_condition=="Months") selected @endif>
+                                                    {{__('contact.Months')}}
+                                                </option>
+                                                <option
+                                                    @if($contact->pay_term_condition=="Days") selected @endif>{{__('contact.Days')}}
+                                                </option>
+                                            </select>
+                                            <span class="text-danger">{{$errors->first('pay_term_condition')}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Email')}}</label>
+                                            <input type="text" name="email" class="primary_input_field"
+                                                   value="{{$contact->email}}"
+                                                  >
+                                            <span class="text-danger">{{$errors->first('email')}}</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label" for="">{{__('contact.Mobile')}}</label>
+                                            <input type="text" name="mobile" class="primary_input_field"
+                                                   value="{{$contact->mobile}}">
+                                            <span class="text-danger">{{$errors->first('mobile')}}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="">{{__('contact.Alternate Contact No')}}</label>
+                                            <input type="text" name="alternate_contact_no" class="primary_input_field"
+                                                   value="{{$contact->alternate_contact_no}}">
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="country_id">{{ __('contact.Country') }}</label>
+                                            <select class="primary_select mb-25" name="country_id" id="country_id">
+                                                <option disabled selected>{{ __('contact.Select Country') }}</option>
+                                                @foreach ($countries as $key => $country)
+                                                    <option value="{{ $country->id }}"
+                                                            @if ($country->id == $contact->country_id) selected @endif>{{ $country->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="state_id">{{ __('contact.State') }}</label>
+                                            <select class="primary_select mb-25" name="state_id" id="state_id">
+                                                @forelse ($states as $key => $state)
+                                                    <option value="{{ $state->id }}"
+                                                            @if ($state->id == $contact->state_id) selected @endif>{{ $state->name }}</option>
+                                                @empty
+                                                    <option disabled selected>{{ __('setting.Select State') }}</option>
+
+                                                @endforelse
+                                            </select>
+                                            <span class="text-danger">{{$errors->first('state_id')}}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-4">
+
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for="city_id">{{ __('contact.City') }}</label>
+                                            <select class="primary_select mb-25" name="city_id" id="city_id">
+                                                @forelse ($cities as $key => $city)
+                                                    <option value="{{ $city->id }}"
+                                                            @if ($city->id == $contact->city_id) selected @endif>{{ $city->name }}</option>
+                                                @empty
+                                                    <option disabled selected>{{ __('setting.Select City') }}</option>
+                                                @endforelse
+                                            </select>
+                                            <span class="text-danger">{{$errors->first('city_id')}}</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="primary_input mb-15">
+                                            <label class="primary_input_label"
+                                                   for=""> {{__('contact.Address')}} </label>
+                                            <input class="primary_input_field" name="address" placeholder="{{__('common.Address')}}"
+                                                   type="text" value="{{ $contact->address }}">
+                                            <span class="text-danger">{{$errors->first('name')}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <div class="primary_input mb-40">
+                                            <label class="primary_input_label" for=""> {{__('contact.Note')}} </label>
+                                            <textarea class="summernote" name="note">{{ $contact->note }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="submit_btn text-center ">
+                                        <button class="primary-btn semi_large2 fix-gr-bg"><i
+                                                class="ti-check"></i>{{__('contact.Edit Contact')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    @push("scripts")
+        <script type="text/javascript">
+            (function ($) {
+                "use strict";
+                $(document).ready(function () {
+                    _componentAjaxChildLoad('#content_form', '#country_id', '#state_id', 'state')
+                    _componentAjaxChildLoad('#content_form', '#state_id', '#city_id', 'city')
+                });
+            })(jQuery);
+        </script>
+    @endpush
+@endsection

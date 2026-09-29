@@ -1,0 +1,13 @@
+{
+    "name": "ExtraUser",
+    "alias": "extrauser",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ExtraUser\\Providers\\ExtraUserServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

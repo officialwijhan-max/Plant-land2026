@@ -1,0 +1,20 @@
+{
+    "pay_voucher_in_cash": "0",
+    "pay_voucher_in_bank": "0",
+    "recieve_voucher_in_cash": "0",
+    "recieve_voucher_in_bank": "0",
+    "journal_voucher": "0",
+    "account_recievable": "18",
+    "account_payable": "62",
+    "vat_recieve_account": "81",
+    "vat_payment_account": "21",
+    "use_project_in_accounting": "0",
+    "leadger_account_for_employee": "78",
+    "direct_cash_purchase_sub_leadger_account": "3",
+    "default_salary_expense_account": "158",
+    "advance_and_accured_salary_account": "39",
+    "default_leave_salary_account": "164"
+}
+
+
+

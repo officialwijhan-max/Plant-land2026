@@ -1,0 +1,32 @@
+{
+    "ProAccount": {
+        "item_id" : "3770202",
+        "migration": [
+            "2023_08_11_105645_create_account_configurations_table.php",
+            "2023_08_28_050407_create_pr_vouchers_table.php",
+            "2023_08_28_050426_create_pr_transactions_table.php",
+            "2023_08_28_061929_create_pr_leadgers_table.php",
+            "2023_08_28_062025_create_pr_sub_leadgers_table.php",
+            "2023_08_28_105022_create_pr_bank_check_details_table.php",
+            "2023_09_08_072324_create_cash_flow_accounts_table.php",
+            "2023_09_11_083239_create_cash_flow_details_table.php",
+            "2023_10_04_111746_create_pr_financial_years_table.php",
+            "2023_10_06_084033_create_pr_financial_year_leadger_balances_table.php",
+            "2023_12_01_132956_create_pr_banking_statements_table.php",
+            "2023_12_01_164011_create_pr_banking_statement_details_table.php",
+            "2023_08_12_184654_create_rename_col_table.php"
+        ],
+        "names": [
+
+        ],
+        "versions": [
+            "1.0.2"
+        ],
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "notes": [
+            "This is Pro Accounting module for Infix Biz. Thanks for using."
+        ]
+    }
+}

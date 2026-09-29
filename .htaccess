@@ -1,0 +1,45 @@
+# This app is deployed with the Laravel project root as the web document
+# root (not just public/), so anything readable here is directly
+# downloadable over HTTP unless explicitly blocked below. Deny dotfiles and
+# other files that must never be served — .env in particular holds database
+# and mail credentials in plain text.
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+<FilesMatch "\.(env|log|sql|sql\.gz|bak|swp)$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "^(composer\.(json|lock)|package(-lock)?\.json|artisan|webpack\.mix\.js|server\.php|phpunit(\.dusk)?\.xml|mix-manifest\.json|version\.php|web\.config)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Block direct HTTP access to app source/data directories. Laravel loads
+    # these via PHP includes (filesystem-level), never over HTTP, so this
+    # cannot break the app — it only stops browsers/scrapers from reading
+    # source code, logs, session files, or the SQLite/db dumps directly.
+    # Legitimate static assets are served from /public/... instead.
+    # (Modules/ is intentionally excluded — manage_module.blade.php links a
+    # CSS file directly under Modules/ModuleManager/Resources/assets/.)
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor)(/|$) - [F,L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>{{__('common.Stock List')}}</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="{{asset('public/backEnd/')}}/css/rtl/bootstrap.min.css"/>
+
+    <style>
+        .invoice_heading {
+            border-bottom: 1px solid black;
+            padding: 20px;
+            text-transform: capitalize;
+        }
+        body{
+            font-family: "Poppins", sans-serif;
+        }
+        .invoice_logo {
+            width: 50%;
+            float: left;
+            text-align: left;
+        }
+
+        .invoice_no {
+            text-align: right;
+            color: #415094;
+        }
+
+        .invoice_info {
+            padding: 20px;
+            width: 100%;
+            text-transform: capitalize;
+            min-height: 100px;
+        }
+        table {
+            text-align: left;
+            font-family: "Poppins", sans-serif;
+        }
+
+        td, th {
+            color: #828bb2;
+            font-size: 13px;
+            font-weight: 400;
+            font-family: "Poppins", sans-serif;
+        }
+
+        th {
+            font-weight: 600;
+            font-family: "Poppins", sans-serif;
+        }
+        .margin_120{
+            margin-top: 120px;
+            font-size: 12px;
+        }.margin_12{
+            margin-bottom: 120px;
+            font-size: 12px;
+        }
+        .invoice_footer{
+            position: absolute;
+            left: 0;
+            bottom: 180px;
+            width: 100%;
+        }
+
+        .invoice_info_footer {
+            padding: 0px;
+            width: 100%;
+            left: 0;
+            text-transform: capitalize;
+            position: inherit;
+        }
+
+        p {
+            font-size: 10px;
+            color: #454545;
+            line-height: 16px;
+        }
+        .extra_div {
+            height:100;
+        }
+        .a4_width {
+           max-width: 210mm;
+           margin: auto;
+        }
+        h5 {
+            font-size: 13px !important;
+            font-weight: 500;
+            line-height: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid ">
+    <div class="invoice_heading">
+        <div class="invoice_logo">
+            <img src="{{asset(app('general_setting')->logo)}}" style="max-height: 110px; max width: 500px" alt="">
+        </div>
+        <div class="invoice_no">
+            <h5 class="hpb-1">{{app('general_setting')->company_name}}</h5>
+            <h5 class="hpb-1">{{app('general_setting')->phone}}</h5>
+            <h5 class="hpb-1">{{app('general_setting')->email}}</h5>
+            <h5>{{app('general_setting')->address}}</h5>
+            <h5>{{trans("common.Print")}} : {{date('m-d-Y')}}</h5>
+        </div>
+    </div>
+    @php
+        if (count(auth()->user()->user_col_permissions) > 0) {
+            $permissions = auth()->user()->user_col_permissions->where('table_name', 'stock_list')->first();
+        }else {
+            $permissions = null;
+        }
+    @endphp
+    <div class="invoice_info">
+        <h4 class="text-center">{{__('common.Stock List')}}</h4>
+        <table class="table table-bordered billing_info m-0">
+            <thead>
+                @if ($permissions)
+                    <tr>
+                        @if (str_contains($permissions->export_column, 'id'))
+                            <th scope="col">{{__('common.Sl')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'image'))
+                            <th scope="col">{{__('common.Image')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'name'))
+                            <th scope="col">{{__('common.Name')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'sku'))
+                            <th scope="col">{{__('sale.SKU')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'brand'))
+                            <th scope="col">{{__('product.Brand')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'model'))
+                            <th scope="col">{{__('product.Model')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'showroom_or_wareHouse'))
+                        <th scope="col">{{__('product.Branch/Warehouse')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'supplier'))
+                        <th scope="col">{{__('report.Supplier')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'in_stock'))
+                        <th scope="col">{{__('product.In Stock')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'stock_alert'))
+                        <th scope="col">{{__('product.Stock Alert')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'purchase_price'))
+                        <th scope="col">{{__('common.Purchase Price')}}</th>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'selling_price'))
+                        <th scope="col">{{__('common.Selling Price')}}</th>
+                        @endif
+                    </tr>
+                @else
+                    <tr>
+                        <th scope="col">{{__('common.Sl')}}</th>
+                        <th scope="col">{{__('common.Image')}}</th>
+                        <th scope="col">{{__('common.Name')}}</th>
+                        <th scope="col">{{__('sale.SKU')}}</th>
+                        <th scope="col">{{__('product.Brand')}}</th>
+                        <th scope="col">{{__('product.Model')}}</th>
+                        <th scope="col">{{__('product.Branch/Warehouse')}}</th>
+                        <th scope="col">{{__('report.Supplier')}}</th>
+                        <th scope="col">{{__('product.In Stock')}}</th>
+                        <th scope="col">{{__('product.Stock Alert')}}</th>
+                        <th scope="col">{{__('common.Purchase Price')}}</th>
+                        <th scope="col">{{__('common.Selling Price')}}</th>
+                    </tr>
+                @endif
+            </thead>
+            <tbody>
+                @foreach ($items as $key => $item)
+                    @if ($permissions)
+                    <tr>
+                        @if (str_contains($permissions->export_column, 'id'))
+                            <td>{{ $key+1 }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'image'))
+                            <td>
+                                @if (@$item->productSku->product->product_type == "Single")
+                                    <img style="height: 22px;" src="{{asset(@$item->productSku->product->image_source ?? 'public/backEnd/img/no_image.png')}}">
+                                @else
+                                    <img style="height: 22px;" src="{{asset(@$item->productSku->product_variation->image_source ?? 'public/backEnd/img/no_image.png')}}">
+                                @endif
+                            </td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'name'))
+                            <td>{{@$item->productSku->product->product_name}}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'sku'))
+                            <td>{{ @$item->productSku->sku }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'brand'))
+                            <td>{{ @$item->productSku->product->brand->name }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'model'))
+                            <td>{{ @$item->productSku->product->model->name }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'showroom_or_wareHouse'))
+                            <td>{{ @$item->houseable->name }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'in_stock'))
+                            <td>{{ @$item->stock }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'stock_alert'))
+                            <td>{{ @$item->productSku->alert_quantity }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'purchase_price'))
+                            <td>{{ single_price(@$item->productSku->purchase_price) }}</td>
+                        @endif
+                        @if (str_contains($permissions->export_column, 'selling_price'))
+                            <td>{{ single_price(@$item->productSku->selling_price) }}</td>
+                        @endif
+                    </tr>
+                    @else
+                        <tr>
+                            <td>{{ $key+1 }}</td>
+                            <td>
+                                @if (@$item->productSku->product->product_type == "Single")
+                                    <img style="height: 22px;" src="{{asset(@$item->productSku->product->image_source ?? 'public/backEnd/img/no_image.png')}}">
+                                @else
+                                    <img style="height: 22px;" src="{{asset(@$item->productSku->product_variation->image_source ?? 'public/backEnd/img/no_image.png')}}">
+                                @endif
+                            </td>
+                            <td>{{@$item->productSku->product->product_name}}</td>
+                            <td>{{ @$item->productSku->sku }}</td>
+                            <td>{{ @$item->productSku->product->brand->name }}</td>
+                            <td>{{ @$item->productSku->product->model->name }}</td>
+                            <td>{{ @$item->houseable->name }}</td>
+                            <td>{{ @$item->stock }}</td>
+                            <td>{{ @$item->productSku->alert_quantity }}</td>
+                            <td>{{ single_price(@$item->productSku->purchase_price) }}</td>
+                            <td>{{ single_price(@$item->productSku->selling_price) }}</td>
+                        </tr>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{{asset('public/backEnd/vendors/js/jquery-3.6.0.min.js')}}"></script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        window.print();
+    });
+</script>
+</body>
+</html>
