@@ -11,11 +11,24 @@
 })(jQuery);
 
 
+// route() can emit an absolute URL with the wrong scheme/host behind a proxy
+// (http:// on an https:// page = blocked request, select2 stuck on "Searching...").
+// A path-only URL always targets the page's own origin.
+function relativeUrl(url)
+{
+    try {
+        var u = new URL(url, window.location.origin);
+        return u.pathname + u.search;
+    } catch (e) {
+        return url;
+    }
+}
+
 function getAccountBasedOnType()
 {
     $(".payment_to").select2({
         ajax: {
-            url: $('#expense_account_select_list_option').val(),
+            url: relativeUrl($('#expense_account_select_list_option').val()),
             type: "POST",
             dataType: 'json',
             delay: 250,
@@ -35,7 +48,7 @@ function getCustomers()
 {
     $(".customer_to").select2({
         ajax: {
-            url: $('#get_customers').val(),
+            url: relativeUrl($('#get_customers').val()),
             type: "POST",
             dataType: 'json',
             delay: 250,
@@ -55,7 +68,7 @@ function getAccountBasedOnConfigurationGroup()
 {
     $(".payment_from").select2({
         ajax: {
-            url: $('#select_based_on_configuration_group').val(),
+            url: relativeUrl($('#select_based_on_configuration_group').val()),
             type: "POST",
             dataType: 'json',
             delay: 250,
