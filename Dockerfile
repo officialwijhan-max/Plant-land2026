@@ -22,7 +22,7 @@ RUN composer install \
 # ==============================
 # Stage 2: PHP + Apache
 # ==============================
-FROM php:8.2-apache
+FROM php:8.2.35-apache
 
 
 # ==============================
